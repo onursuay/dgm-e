@@ -1,5 +1,4 @@
-"use client";
-import { useState } from "react";
+import React from "react";
 
 const steps = [
   {
@@ -7,129 +6,138 @@ const steps = [
     title: "Apply",
     sub: "Surface Treatment",
     desc: "DNF is applied to vulnerable surfaces — wood, vegetation, fabric, building facades — via spray, brush, or integrated sprinkler systems. Quick, scalable, compatible with standard equipment.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 12h3M3 6h3M3 18h3" />
+        <rect x="6" y="8" width="6" height="12" rx="1" />
+        <path d="M12 10h4l2-3h-4l-2 3ZM16 7V4h2" />
+      </svg>
+    ),
   },
   {
     phase: "02",
     title: "Activate",
     sub: "Thermal Trigger",
-    desc: "When heat or flame contacts DNF-treated surfaces, the formula activates. A thermal barrier layer forms instantly, interrupting the heat transfer process that enables fire to spread.",
+    desc: "When heat or flame contacts DNF-treated surfaces, the formula activates instantly. A thermal barrier layer forms, interrupting the heat transfer that enables fire to spread.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
   },
   {
     phase: "03",
     title: "Slow Spread",
     sub: "Propagation Reduction",
-    desc: "Fire propagation speed is dramatically reduced on treated surfaces. The fire cannot spread at its natural rate — buying measurable minutes of protected time.",
+    desc: "Fire propagation speed is dramatically reduced on treated surfaces — up to 3× slower. Critical minutes are preserved and the treated zone becomes a controlled buffer.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24" />
+      </svg>
+    ),
   },
   {
     phase: "04",
     title: "Reduce Heat",
     sub: "Thermal Attenuation",
-    desc: "Radiant heat reaching untreated adjacent materials drops by up to 56%, limiting secondary ignitions and structural damage from heat alone.",
+    desc: "Radiant heat reaching adjacent untreated structures drops by up to 56%, limiting secondary ignitions and structural damage beyond the treated area.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    ),
   },
   {
     phase: "05",
     title: "Support Response",
     sub: "Emergency Window",
-    desc: "Fire departments gain 5–10 extra minutes to arrive, establish perimeters, and begin targeted suppression under more controlled conditions.",
+    desc: "Fire departments gain 5–10 extra minutes to arrive, establish perimeters, suppress fire, and coordinate evacuation under controlled conditions.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
   },
   {
     phase: "06",
     title: "Protect Assets",
     sub: "Structural & Life Safety",
-    desc: "People evacuate safely. Buildings hold. Nature survives. Cultural heritage preserved. Industrial continuity maintained. DNF buys time to act effectively.",
+    desc: "People evacuate safely. Buildings hold. Nature survives. Cultural heritage is preserved. Industrial continuity maintained. DNF buys time to act effectively.",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+        <polyline points="9 12 11 14 15 10" />
+      </svg>
+    ),
   },
 ];
 
 export default function HowItWorks() {
-  const [open, setOpen] = useState(0);
-
   return (
     <section
       className="relative py-10 overflow-hidden"
       style={{ background: "#06040e" }}
     >
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-10">
-        {/* Section header */}
-        <div className="mb-16">
+        {/* Section header — single line */}
+        <div className="mb-14">
           <span className="inline-block text-xs font-bold tracking-[0.3em] uppercase text-[#a78bfa] mb-4">
             How DNF Works
           </span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#f0ecff] leading-tight">
-            Six Steps.<br />
-            <span className="text-ice-gradient">One Mission.</span>
+            Six Steps. <span className="text-ice-gradient">One Mission.</span>
           </h2>
         </div>
 
-        {/* Accordion steps */}
-        <div className="max-w-2xl">
-          {steps.map((step, i) => {
-            const isOpen = open === i;
-            return (
+        {/* 2×3 card grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {steps.map((step, i) => (
+            <div
+              key={i}
+              className="rounded-2xl p-7 relative overflow-hidden group transition-all duration-300"
+              style={{
+                background: "rgba(8,4,14,0.8)",
+                border: "1px solid rgba(124,58,237,0.15)",
+                borderTop: "2px solid rgba(124,58,237,0.5)",
+              }}
+            >
+              {/* Phase watermark */}
               <div
-                key={i}
-                className="transition-colors"
-                style={{
-                  borderBottom: "1px solid rgba(124,58,237,0.15)",
-                  borderLeft: isOpen ? "2px solid #7c3aed" : "2px solid transparent",
-                  background: isOpen ? "rgba(124,58,237,0.05)" : "transparent",
-                  paddingLeft: isOpen ? "1rem" : "0",
-                  transition: "background 0.2s, border-color 0.2s, padding 0.2s",
-                }}
+                className="absolute top-3 right-4 text-6xl font-black leading-none select-none pointer-events-none"
+                style={{ color: "rgba(124,58,237,0.07)" }}
               >
-                {/* Clickable header row */}
-                <button
-                  className="w-full flex items-center gap-4 py-5 text-left"
-                  onClick={() => setOpen(isOpen ? -1 : i)}
-                  aria-expanded={isOpen}
-                >
-                  {/* Number */}
-                  <span
-                    className="text-sm font-black w-12 shrink-0"
-                    style={{ color: "#a78bfa" }}
-                  >
-                    {step.phase}
-                  </span>
-
-                  {/* Title */}
-                  <span
-                    className="text-base font-bold flex-1"
-                    style={{ color: "#f0ecff" }}
-                  >
-                    {step.title}
-                  </span>
-
-                  {/* Toggle icon */}
-                  <span
-                    className="text-xl font-bold shrink-0 leading-none"
-                    style={{ color: "#7c3aed" }}
-                  >
-                    {isOpen ? "−" : "+"}
-                  </span>
-                </button>
-
-                {/* Expandable content */}
-                <div
-                  className="overflow-hidden transition-all duration-300"
-                  style={{ maxHeight: isOpen ? "24rem" : "0" }}
-                >
-                  <div className="pb-5 pl-16 pr-4">
-                    <div
-                      className="text-xs font-bold tracking-[0.25em] uppercase mb-2 opacity-70"
-                      style={{ color: "#a78bfa" }}
-                    >
-                      {step.sub}
-                    </div>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{ color: "#6a5880" }}
-                    >
-                      {step.desc}
-                    </p>
-                  </div>
-                </div>
+                {step.phase}
               </div>
-            );
-          })}
+
+              <div className="relative z-10">
+                {/* Icon */}
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-[#a78bfa]"
+                  style={{
+                    background: "rgba(124,58,237,0.08)",
+                    border: "1px solid rgba(124,58,237,0.2)",
+                  }}
+                >
+                  {step.icon}
+                </div>
+
+                {/* Sub label */}
+                <div className="text-xs font-bold tracking-[0.2em] uppercase text-[#a78bfa] mb-2 opacity-70">
+                  {step.sub}
+                </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-bold text-[#f0ecff] mb-3">{step.title}</h3>
+
+                {/* Description */}
+                <p className="text-sm text-[#6a5880] leading-relaxed">{step.desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
