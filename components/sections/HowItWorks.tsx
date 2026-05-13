@@ -1,3 +1,6 @@
+"use client";
+import { useState } from "react";
+
 const steps = [
   {
     phase: "01",
@@ -38,6 +41,8 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const [open, setOpen] = useState(0);
+
   return (
     <section
       className="relative py-10 overflow-hidden"
@@ -55,40 +60,76 @@ export default function HowItWorks() {
           </h2>
         </div>
 
-        {/* Steps — large number left, text right */}
-        <div className="space-y-0 divide-y divide-red-900/10">
-          {steps.map((step, i) => (
-            <div
-              key={i}
-              className="grid grid-cols-[80px_1fr] lg:grid-cols-[120px_1fr] gap-6 lg:gap-12 py-8 group"
-            >
-              {/* Large phase number */}
-              <div className="flex items-start pt-1">
-                <span
-                  className="text-5xl lg:text-7xl font-black leading-none select-none group-hover:opacity-100 transition-opacity"
-                  style={{
-                    background: "linear-gradient(180deg, rgba(167,139,250,0.5) 0%, rgba(124,58,237,0.15) 100%)",
-                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-                  }}
+        {/* Accordion steps */}
+        <div className="max-w-2xl">
+          {steps.map((step, i) => {
+            const isOpen = open === i;
+            return (
+              <div
+                key={i}
+                className="transition-colors"
+                style={{
+                  borderBottom: "1px solid rgba(124,58,237,0.15)",
+                  borderLeft: isOpen ? "2px solid #7c3aed" : "2px solid transparent",
+                  background: isOpen ? "rgba(124,58,237,0.05)" : "transparent",
+                  paddingLeft: isOpen ? "1rem" : "0",
+                  transition: "background 0.2s, border-color 0.2s, padding 0.2s",
+                }}
+              >
+                {/* Clickable header row */}
+                <button
+                  className="w-full flex items-center gap-4 py-5 text-left"
+                  onClick={() => setOpen(isOpen ? -1 : i)}
+                  aria-expanded={isOpen}
                 >
-                  {step.phase}
-                </span>
-              </div>
+                  {/* Number */}
+                  <span
+                    className="text-sm font-black w-12 shrink-0"
+                    style={{ color: "#a78bfa" }}
+                  >
+                    {step.phase}
+                  </span>
 
-              {/* Content */}
-              <div className="py-1">
-                <div className="text-xs font-bold tracking-[0.25em] uppercase text-[#a78bfa] mb-2 opacity-60">
-                  {step.sub}
+                  {/* Title */}
+                  <span
+                    className="text-base font-bold flex-1"
+                    style={{ color: "#f0ecff" }}
+                  >
+                    {step.title}
+                  </span>
+
+                  {/* Toggle icon */}
+                  <span
+                    className="text-xl font-bold shrink-0 leading-none"
+                    style={{ color: "#7c3aed" }}
+                  >
+                    {isOpen ? "−" : "+"}
+                  </span>
+                </button>
+
+                {/* Expandable content */}
+                <div
+                  className="overflow-hidden transition-all duration-300"
+                  style={{ maxHeight: isOpen ? "24rem" : "0" }}
+                >
+                  <div className="pb-5 pl-16 pr-4">
+                    <div
+                      className="text-xs font-bold tracking-[0.25em] uppercase mb-2 opacity-70"
+                      style={{ color: "#a78bfa" }}
+                    >
+                      {step.sub}
+                    </div>
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: "#6a5880" }}
+                    >
+                      {step.desc}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-xl lg:text-2xl font-black text-[#f0ecff] mb-3 leading-tight">
-                  {step.title}
-                </h3>
-                <p className="text-sm lg:text-base text-[#6a5880] leading-relaxed max-w-2xl">
-                  {step.desc}
-                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
